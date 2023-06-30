@@ -14,12 +14,24 @@ The KServe wrapper files were created to enable the Torchserve integration with 
 
 3. TSModelRepository.py file contains the initialize method for the parameters that gets passed on to the Torchservemodel.py.
 
+KServe 래퍼 파일은 토치서브와 KServe의 연동을 활성화하기 위해 만들어졌습니다.
+
+1. __main__.py 파일은 KServe 측에 있는 config.properties에서 모델 스냅샷을 구문 분석하고 추론 주소, 관리 주소, 모델 주소와 같은 파라미터를 KServe 측에 전달하여 입력 요청과 응답을 처리합니다.
+
+2. TorchserveModel.py 파일에는 Torchserve 측에서 들어오는 요청과 응답을 처리하여 KServe 측에 전달하는 메서드가 포함되어 있습니다.
+
+3. TSModelRepository.py 파일에는 Torchservemodel.py에 전달되는 파라미터에 대한 초기화 메서드가 포함되어 있습니다.
+
 ## The Local Testing of KServe Wrapper for MNIST
 
 Run KFServer locally to test it before creating a docker image.
 Torchserve makes use of port 8085 and the kfserver runs at port 8080
 We will hit kfserve , which in turn hits torch serve for inference and explanations request.
 Follow the below steps to serve the MNIST Model :
+도커 이미지를 생성하기 전에 로컬에서 KFServer를 실행하여 테스트합니다.
+Torchserve는 포트 8085를 사용하고 kfserver는 포트 8080에서 실행됩니다.
+추론 및 설명 요청을 위해 kfserve를 실행하고, 다시 토치서브를 실행합니다.
+아래 단계에 따라 MNIST 모델을 서비스합니다:
 
 - Step 1 : Install python3.8
 
@@ -42,12 +54,13 @@ python ./ts_scripts/install_from_src.py
 ```
 
 - Step 6: Create a directory to place the config.properties in the folder structure below:
-
+아래 폴더 구조에 config.properties를 배치할 디렉터리를 생성합니다:
 ```bash
 sudo  mkdir -p /mnt/models/config/
 ```
 
 - Step 7: Create a directory to place the .mar file in the folder structure below:
+아래 폴더 구조에 .mar 파일을 저장할 디렉터리를 생성합니다:
 
 ```bash
 sudo  mkdir -p /mnt/models/model-store
@@ -56,7 +69,7 @@ sudo  mkdir -p /mnt/models/model-store
 - Step 8: Move the model to /mnt/models/model-store
 
 - Step 9: Set service_envelope in config.properties to switch between kserve v1 and v2 protocols
-
+config.properties에서 서비스_봉투를 설정하여 kserve v1과 v2 프로토콜 간에 전환합니다.
 For v1 protocol
 
 ``export TS_SERVICE_ENVELOPE=kserve`
